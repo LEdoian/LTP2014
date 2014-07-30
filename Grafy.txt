@@ -1,0 +1,38 @@
+Grafy a Algoritmy
+-----------------
+Graf je balíček vrcholů a hran
+Jak uložit graf v programu?
+	- seznamem hran vedoucích z každého bodu.
+	  - Nevýhoda: špatná rozšiřitelnost grafu - s počtem vrcholů se těžko hýbe.
+	- binární tabulkou, která má na průsečíku hrany a sloupce vrcholu 1, pokud tam vede hrana a 0 pokud ne.
+	  - Kromě toho stačí jen 1/2 té tabulky - je osově souměrná podle diagonály, na které neleží žádná jednička (žádná hrana nevede z vrcholu 1 do vrcholu 1, z 2 do 2, ....)
+Stupeň vrcholu grafu - počet hran, které z daného vrcholu vycházejí.
+Největší počet hran grafu s n vrcholy: n(n-1)/2
+Strom	- necyklí se
+	- počet hran je o 1 menší než počet vrcholů
+	- dá se to dokázat indukcí :)
+	  - list - vrchol se stupněm 1
+	    - každý strom má alespoň 2 listy, pokud má alespoň 2 vrcholy
+	      - Strom tvořený jedním vrcholem je stále strom, nemá list a ten vrchol má stupeň 0
+	- kořen - jediný vrchol, ze kterého nevede hrana nahoru
+	  - zakořeněný strom
+	  - z každého jiného vrcholu vede právě 1 hrana nahoru
+	    - strom se dá uložit pomocí uložení hrany nahoru ke každému vrcholu
+Cesta	- "o-o-o-o-o-o-o" kde o je vrchol a - hrana
+
+Procházení grafů
+----------------
+Procházení do hloubky
+-> Zvolíme si vrchol (nebo je nám přidělen), vrchol si označíme, že jsme tam byli, ale že jsme ještě všechny hrany neprozkoumali, zvolíme hranu a pokračujeme z toho 
+vrcholu stejně. když hrana vede do bodu, kde už jsem byl, tak se vrátím, když nemám jak jít tam, kde jsem ještě nebyl, označím si, že nemám kam jít a vrátím se.
+-> Kostra grafu
+	- všechny hrany, po kterých jsme se někdy vraceli
+Procházení do šířky
+-> zvolíme si vrchol (nebo je nám přidělen), na každém vrcholu, kde se lze rozdělit (stupeň >= 3) se rozdělí skupina na poloviny (graf samozřejmě procházejí lidé), když se 
+dvě skupiny potkají a nemají žádnou hranu, po které ještě ani jedna skupina nešla, se zastaví a kašlou na to. Ve slepé uličse se taky skupina zastaví. Ten, co z bludiště 
+vyleze první prošel nejkratší trasu - všichni jdou stejně rychle
+	- Mohl jsem hned na začátku napsat, že lidé procházejí bludiště :)
+	- Pak si můžeme vrcholy označit čísly, za jak dlouho to mohla daná skupina projít - první vrchol 1, sousední vrcholy 2, .... Preferujeme nižší číslo - čísla nepřepisujeme. Nejkratší cesta se pak dá hledat odzadu - jdeme vždy k nižšímu číslu až do začátku.
+
+=> Na procházení do hloubky se hodí zásobník (LIFO - Last In, First Out) a poznámky v grafu (do zásobníku si dávám hrany a každou dvakrát), na procházení do šířky se hodí 
+fronta (FIFO - First In, First Out) 
